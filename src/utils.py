@@ -41,7 +41,7 @@ def load_preprocess():
     """
     Load the Preprocessed Training data and return them in batches of <batch_size> or less
     """
-    return pickle.load(open('preprocess.p', mode='rb'))
+    return pickle.load(open('../data/preprocess.p', mode='rb'))
 
 
 def save_model(filename, decoder):
