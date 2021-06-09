@@ -3,7 +3,8 @@ from utils import *
 import torch.nn.functional as F
 from build_models import *
 
-def generate(rnn, prime_id, int_to_vocab, token_dict, pad_value, predict_len=100):
+def generate(rnn, prime_id, int_to_vocab, token_dict, pad_value, 
+             sequence_length = 20, predict_len=1000, train_on_gpu=True):
 
     """
     Generate text using the neural network
@@ -51,8 +52,9 @@ def generate(rnn, prime_id, int_to_vocab, token_dict, pad_value, predict_len=100
         # retrieve that word from the dictionary
         word = int_to_vocab[word_i]
         predicted.append(word)     
-        
+
         # the generated word becomes the next "current sequence" and the cycle can continue
+        current_seq = current_seq.cpu()
         current_seq = np.roll(current_seq, -1, 1)
         current_seq[-1][-1] = word_i
     
@@ -79,7 +81,7 @@ if __name__ == '__main__':
     trained_rnn = load_model('./save/trained_rnn')
 
     sequence_length = 10
-    gen_length = 500
+    gen_length = 1000
     prime_word = 'lannisters'
 
     pad_word = SPECIAL_WORDS['PADDING']
@@ -92,3 +94,7 @@ if __name__ == '__main__':
         gen_length
         )
     print(generated_script)
+
+    f =  open("../outputs/generated_script_1.txt", "w")
+    f.write(generated_script)
+    f.close()

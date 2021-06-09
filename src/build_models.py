@@ -3,6 +3,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from utils import *
 import numpy as np
 import torch.nn as nn
+from generate import *
 
 def batch_data(words, sequence_length, batch_size):
     """
@@ -228,3 +229,18 @@ if __name__ == '__main__':
     # saving the trained model
     save_model('./save/trained_rnn', trained_rnn)
     print('Model Trained and Saved')
+
+    sequence_length = 10
+    gen_length = 500
+    prime_word = 'lannisters'
+
+    pad_word = SPECIAL_WORDS['PADDING']
+    generated_script = generate(
+        trained_rnn, 
+        vocab_to_int[prime_word], 
+        int_to_vocab, 
+        token_dict, 
+        vocab_to_int[pad_word], 
+        gen_length
+        )
+    print(generated_script)
