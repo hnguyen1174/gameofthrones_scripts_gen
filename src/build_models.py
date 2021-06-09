@@ -89,6 +89,11 @@ class RNN(nn.Module):
         '''
         # Implement function
         weight = next(self.parameters()).data
+
+        # Check for a GPU
+        train_on_gpu = torch.cuda.is_available()
+        if not train_on_gpu:
+            print('No GPU found. Please use a GPU to train your neural network.')
         
         # initialize hidden state with zero weights, and move to GPU if available
         if (train_on_gpu):
@@ -221,5 +226,5 @@ if __name__ == '__main__':
     trained_rnn = train_rnn(rnn, batch_size, optimizer, criterion, num_epochs, show_every_n_batches)
 
     # saving the trained model
-    helper.save_model('./save/trained_rnn', trained_rnn)
+    save_model('./save/trained_rnn', trained_rnn)
     print('Model Trained and Saved')
