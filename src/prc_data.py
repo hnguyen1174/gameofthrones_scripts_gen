@@ -41,5 +41,12 @@ def token_lookup():
 
 if __name__ == '__main__':
 
-    data_dir = '../data/got_scripts.txt'
-    preprocess_and_save_data(data_dir, token_lookup, create_lookup_tables)
+    config = load_config('config.yaml')
+
+    data_dir = config['data_dir']
+    preprocess_and_save_data(
+        data_dir, 
+        token_lookup, 
+        create_lookup_tables,
+        output_path=config['processed_data_dir']
+        )

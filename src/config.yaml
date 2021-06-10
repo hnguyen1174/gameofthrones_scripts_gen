@@ -7,3 +7,5 @@ hidden_dim: 300
 n_layers: 2
 show_every_n_batches: 300
 model_name: 'trained_rnn2'
+data_dir: '../data/got_scripts.txt'
+processed_data_dir: '../data/preprocess2.p'
