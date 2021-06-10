@@ -181,7 +181,7 @@ if __name__ == '__main__':
     if not train_on_gpu:
         print('No GPU found. Please use a GPU to train your neural network.')
 
-    int_text, vocab_to_int, int_to_vocab, token_dict = load_preprocess()
+    int_text, vocab_to_int, int_to_vocab, token_dict = load_preprocess(config['processed_data_dir'])
 
     # Sequence Length
     sequence_length = config['sequence_length']

@@ -39,11 +39,11 @@ def preprocess_and_save_data(dataset_path, token_lookup, create_lookup_tables,
     pickle.dump((int_text, vocab_to_int, int_to_vocab, token_dict), open(output_path, 'wb'))
 
 
-def load_preprocess():
+def load_preprocess(processed_data_path='../data/preprocess.p'):
     """
     Load the Preprocessed Training data and return them in batches of <batch_size> or less
     """
-    return pickle.load(open('../data/preprocess.p', mode='rb'))
+    return pickle.load(open(processed_data_path, mode='rb'))
 
 
 def save_model(filename, decoder):

@@ -44,10 +44,15 @@ def generate(rnn, prime_id, int_to_vocab, token_dict, pad_value,
         top_k = 5
         p, top_i = p.topk(top_k)
         top_i = top_i.numpy().squeeze()
-        
+        top_i = np.where(top_i >= len(int_to_vocab)-1, len(int_to_vocab)-1, top_i)
+
         # select the likely next word index with some element of randomness
         p = p.numpy().squeeze()
         word_i = np.random.choice(top_i, p=p/p.sum())
+
+        print('=========================')
+        print(word_i)
+        print('=========================')
         
         # retrieve that word from the dictionary
         word = int_to_vocab[word_i]
@@ -78,10 +83,10 @@ if __name__ == '__main__':
         print('No GPU found. Please use a GPU to train your neural network.')
 
     _, vocab_to_int, int_to_vocab, token_dict = load_preprocess()
-    trained_rnn = load_model('./save/trained_rnn')
+    trained_rnn = load_model('./save/trained_rnn2')
 
     sequence_length = 10
-    gen_length = 1000
+    gen_length = 100
     prime_word = 'lannisters'
 
     pad_word = SPECIAL_WORDS['PADDING']
@@ -91,10 +96,10 @@ if __name__ == '__main__':
         int_to_vocab, 
         token_dict, 
         vocab_to_int[pad_word], 
-        gen_length
+        # gen_length
         )
     print(generated_script)
 
-    f =  open("../outputs/generated_script_1.txt", "w")
+    f =  open("../outputs/generated_script_2.txt", "w")
     f.write(generated_script)
     f.close()
