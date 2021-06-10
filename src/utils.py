@@ -1,6 +1,7 @@
 import os
 import pickle
 import torch
+import yaml
 
 
 SPECIAL_WORDS = {'PADDING': '<PAD>'}

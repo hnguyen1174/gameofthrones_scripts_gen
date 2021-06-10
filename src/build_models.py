@@ -4,6 +4,7 @@ from utils import *
 import numpy as np
 import torch.nn as nn
 from generate import *
+import yaml
 
 def batch_data(words, sequence_length, batch_size):
     """
