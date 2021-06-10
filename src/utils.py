@@ -52,3 +52,9 @@ def save_model(filename, decoder):
 def load_model(filename):
     save_filename = os.path.splitext(os.path.basename(filename))[0] + '.pt'
     return torch.load(os.path.join('../models', save_filename))
+
+def load_config(config_path):
+
+    with open(config_path) as f:
+        config = yaml.safe_load(f)
+    return config

@@ -173,6 +173,8 @@ def train_rnn(rnn, batch_size, optimizer, criterion, n_epochs, show_every_n_batc
 
 if __name__ == '__main__':
 
+    config = load_config('config.yaml')
+
     # Check for a GPU
     train_on_gpu = torch.cuda.is_available()
     if not train_on_gpu:
@@ -181,19 +183,19 @@ if __name__ == '__main__':
     int_text, vocab_to_int, int_to_vocab, token_dict = load_preprocess()
 
     # Sequence Length
-    sequence_length = 10
+    sequence_length = config['sequence_length']
 
     # Batch Size
-    batch_size = 100
+    batch_size = config['batch_size']
 
     # data loader - do not change
     train_loader = batch_data(int_text, sequence_length, batch_size)
 
     # Number of Epochs
-    num_epochs = 6
+    num_epochs = config['num_epochs']
 
     # Learning Rate
-    learning_rate = 0.001
+    learning_rate = config['learning_rate']
 
     # Model parameters
     # Vocab size
@@ -203,16 +205,16 @@ if __name__ == '__main__':
     output_size = vocab_size
 
     # Embedding Dimension
-    embedding_dim = 300
+    embedding_dim = config['embedding_dim']
 
     # Hidden Dimension
-    hidden_dim = 300
+    hidden_dim = config['hidden_dim']
 
     # Number of RNN Layers
-    n_layers = 2
+    n_layers = config['n_layers']
 
     # Show stats for every n number of batches
-    show_every_n_batches = 300
+    show_every_n_batches = config['show_every_n_batches']
 
     # create model and move to gpu if available
     rnn = RNN(vocab_size, output_size, embedding_dim, hidden_dim, n_layers, dropout=0.5)
@@ -227,20 +229,5 @@ if __name__ == '__main__':
     trained_rnn = train_rnn(rnn, batch_size, optimizer, criterion, num_epochs, show_every_n_batches)
 
     # saving the trained model
-    save_model('./save/trained_rnn', trained_rnn)
+    save_model('./save/{}'.format(config['model_name']), trained_rnn)
     print('Model Trained and Saved')
-
-    sequence_length = 10
-    gen_length = 500
-    prime_word = 'lannisters'
-
-    pad_word = SPECIAL_WORDS['PADDING']
-    generated_script = generate(
-        trained_rnn, 
-        vocab_to_int[prime_word], 
-        int_to_vocab, 
-        token_dict, 
-        vocab_to_int[pad_word], 
-        gen_length
-        )
-    print(generated_script)
