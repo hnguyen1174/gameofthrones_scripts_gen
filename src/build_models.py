@@ -232,3 +232,24 @@ if __name__ == '__main__':
     # saving the trained model
     save_model('./save/{}'.format(config['model_name']), trained_rnn)
     print('Model Trained and Saved')
+
+    if config['generate']:
+        
+        sequence_length = 10
+        gen_length = 100
+        prime_word = 'lannisters'
+
+        pad_word = SPECIAL_WORDS['PADDING']
+        generated_script = generate(
+            trained_rnn, 
+            vocab_to_int[prime_word], 
+            int_to_vocab, 
+            token_dict, 
+            vocab_to_int[pad_word], 
+            gen_length
+            )
+        print(generated_script)
+
+        f =  open("../outputs/generated_script_2.txt", "w")
+        f.write(generated_script)
+        f.close()

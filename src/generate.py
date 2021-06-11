@@ -44,7 +44,7 @@ def generate(rnn, prime_id, int_to_vocab, token_dict, pad_value,
         top_k = 5
         p, top_i = p.topk(top_k)
         top_i = top_i.numpy().squeeze()
-        top_i = np.where(top_i >= len(int_to_vocab)-1, len(int_to_vocab)-1, top_i)
+        # top_i = np.where(top_i >= len(int_to_vocab)-1, len(int_to_vocab)-1, top_i)
 
         # select the likely next word index with some element of randomness
         p = p.numpy().squeeze()
