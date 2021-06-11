@@ -250,6 +250,6 @@ if __name__ == '__main__':
             )
         print(generated_script)
 
-        f =  open("../outputs/generated_script_2.txt", "w")
+        f =  open("../outputs/generated_script_3.txt", "w")
         f.write(generated_script)
         f.close()
